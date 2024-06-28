@@ -16,15 +16,21 @@ public class MenuScreen implements Screen
     final private MyGdxGame game;
     private       Texture   logo;
 
+    private Texture bg1, bg2;
+
     final private int screenWidth  = 640;
     final private int screenHeight = 480;
 
-    //  Menu UI
     private BitmapFont font;
 
     private PlayOption     play;
     private SettingsOption settings;
     private QuitOption     quit;
+
+    final private float horVelocity = 50f;
+    final private float bg1Scale = 2.25f;
+
+    private Vector2 bg1pos, bg2pos;
 
     public MenuScreen(MyGdxGame game)
     {
@@ -35,9 +41,19 @@ public class MenuScreen implements Screen
     public void show()
     {
         logo = new Texture("logo.png");
+        bg1  = new Texture("bg3.png");
+        bg2  = new Texture("bg3.png");
+
+        bg1pos = new Vector2(0f, 0f);
+        bg2pos = new Vector2(bg1.getWidth() / bg1Scale,0f);
 
         font = new BitmapFont();
 
+        createOptions();
+    }
+
+    private void createOptions()
+    {
         final Vector2 playPos = new Vector2(screenWidth / 2f - 10f, screenHeight / 2f + 50f);
         play = new PlayOption("Play", playPos, font, this);
 
@@ -46,8 +62,6 @@ public class MenuScreen implements Screen
 
         final Vector2 quitPos = new Vector2(screenWidth / 2f - 10f, screenHeight / 2f - 50f);
         quit = new QuitOption("Quit", quitPos, font, this);
-
-        System.out.println("krlho");
     }
 
     private void update(float dt)
@@ -58,6 +72,16 @@ public class MenuScreen implements Screen
         play.update(mouseX, mouseY);
         settings.update(mouseX, mouseY);
         quit.update(mouseX, mouseY);
+
+        bg1pos.x -= horVelocity * dt;
+        bg2pos.x -= horVelocity * dt;
+
+        float bg1RightEdge = bg1pos.x + bg1.getWidth() / bg1Scale;
+        float bg2RightEdge = bg2pos.x + bg2.getWidth() / bg1Scale;
+        if (bg1RightEdge < 0)
+            bg1pos.x = bg2RightEdge;
+        else if (bg2RightEdge < 0)
+            bg2pos.x = bg1RightEdge;
     }
 
     @Override
@@ -76,6 +100,9 @@ public class MenuScreen implements Screen
         float logoY      = screenHeight - logoHeight - 50f;
 
         game.batch.begin();
+
+        game.batch.draw(bg1, bg1pos.x, bg1pos.y, bg1.getWidth() / bg1Scale, bg1.getHeight() / bg1Scale);
+        game.batch.draw(bg2, bg2pos.x, bg2pos.y, bg2.getWidth() / bg1Scale, bg2.getHeight() / bg1Scale);
 
         game.batch.draw(logo, logoX, logoY, logoWidth, logoHeight);
 
@@ -118,6 +145,8 @@ public class MenuScreen implements Screen
     {
         logo.dispose();
         font.dispose();
+        bg1.dispose();
+        bg2.dispose();
     }
 
     public int getScreenWidth()
@@ -130,5 +159,8 @@ public class MenuScreen implements Screen
         return screenHeight;
     }
 
-    public MyGdxGame getGame() { return game; }
+    public MyGdxGame getGame()
+    {
+        return game;
+    }
 }
