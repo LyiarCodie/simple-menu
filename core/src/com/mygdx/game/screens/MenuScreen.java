@@ -18,17 +18,13 @@ public class MenuScreen implements Screen
 
     private Texture bg1, bg2;
 
-    final private int screenWidth  = 640;
-    final private int screenHeight = 480;
-
     private BitmapFont font;
 
     private PlayOption     play;
     private SettingsOption settings;
     private QuitOption     quit;
 
-    final private float horVelocity = 50f;
-    final private float bg1Scale = 2.25f;
+    final private float bg1Scale    = 2.25f;
 
     private Vector2 bg1pos, bg2pos;
 
@@ -45,7 +41,7 @@ public class MenuScreen implements Screen
         bg2  = new Texture("bg3.png");
 
         bg1pos = new Vector2(0f, 0f);
-        bg2pos = new Vector2(bg1.getWidth() / bg1Scale,0f);
+        bg2pos = new Vector2(bg1.getWidth() / bg1Scale, 0f);
 
         font = new BitmapFont();
 
@@ -54,13 +50,13 @@ public class MenuScreen implements Screen
 
     private void createOptions()
     {
-        final Vector2 playPos = new Vector2(screenWidth / 2f - 10f, screenHeight / 2f + 50f);
+        final Vector2 playPos = new Vector2(game.getScreenWidth() / 2f - 10f, game.getScreenHeight() / 2f + 50f);
         play = new PlayOption("Play", playPos, font, this);
 
-        final Vector2 settingsPos = new Vector2(screenWidth / 2f - 10f, screenHeight / 2f);
+        final Vector2 settingsPos = new Vector2(game.getScreenWidth() / 2f - 10f, game.getScreenHeight() / 2f);
         settings = new SettingsOption("Settings", settingsPos, font, this);
 
-        final Vector2 quitPos = new Vector2(screenWidth / 2f - 10f, screenHeight / 2f - 50f);
+        final Vector2 quitPos = new Vector2(game.getScreenWidth() / 2f - 10f, game.getScreenHeight() / 2f - 50f);
         quit = new QuitOption("Quit", quitPos, font, this);
     }
 
@@ -73,6 +69,7 @@ public class MenuScreen implements Screen
         settings.update(mouseX, mouseY);
         quit.update(mouseX, mouseY);
 
+        float horVelocity = 50f;
         bg1pos.x -= horVelocity * dt;
         bg2pos.x -= horVelocity * dt;
 
@@ -96,8 +93,8 @@ public class MenuScreen implements Screen
 
         float logoWidth  = logo.getWidth() / 2f;
         float logoHeight = logo.getHeight() / 2f;
-        float logoX      = screenWidth / 2f - logoWidth / 2f;
-        float logoY      = screenHeight - logoHeight - 50f;
+        float logoX      = game.getScreenWidth() / 2f - logoWidth / 2f;
+        float logoY      = game.getScreenHeight() - logoHeight - 50f;
 
         game.batch.begin();
 
@@ -106,8 +103,8 @@ public class MenuScreen implements Screen
 
         game.batch.draw(logo, logoX, logoY, logoWidth, logoHeight);
 
-        font.draw(game.batch, "Mouse:", 5f, screenHeight - 5f);
-        font.draw(game.batch, String.format("x: %d | y: %d", mouseX, mouseY), 5f, screenHeight - 20f);
+        font.draw(game.batch, "Mouse:", 5f, game.getScreenHeight() - 5f);
+        font.draw(game.batch, String.format("x: %d | y: %d", mouseX, mouseY), 5f, game.getScreenHeight() - 20f);
 
         play.draw(game.batch, mouseX, mouseY);
         settings.draw(game.batch, mouseX, mouseY);
@@ -119,7 +116,6 @@ public class MenuScreen implements Screen
     @Override
     public void resize(int width, int height)
     {
-        System.out.printf("Screen Width: %d | Screen Height: %d%n", width, height);
     }
 
     @Override
@@ -147,16 +143,6 @@ public class MenuScreen implements Screen
         font.dispose();
         bg1.dispose();
         bg2.dispose();
-    }
-
-    public int getScreenWidth()
-    {
-        return screenWidth;
-    }
-
-    public int getScreenHeight()
-    {
-        return screenHeight;
     }
 
     public MyGdxGame getGame()

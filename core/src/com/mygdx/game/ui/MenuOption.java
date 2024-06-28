@@ -21,13 +21,8 @@ public abstract class MenuOption
         this.position = position;
         this.screen   = screen;
 
-        this.rect = new Rectangle(position.x - 10f, (float) screen.getScreenHeight() - position.y,
+        this.rect = new Rectangle(position.x - 10f, (float) screen.getGame().getScreenHeight() - position.y,
                 10f * (text.length() + 1), 20f);
-
-        System.out.printf("%S option:\n", text);
-        System.out.printf("x: %f | %f\n", position.x, position.y);
-        System.out.println("Actual text position:");
-        System.out.printf("x: %f | %f\n", position.x, (float) screen.getScreenHeight() - position.y);
     }
 
     abstract void update(int mouseX, int mouseY);

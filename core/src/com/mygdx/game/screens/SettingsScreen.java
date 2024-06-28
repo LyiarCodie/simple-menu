@@ -24,7 +24,7 @@ public class SettingsScreen implements Screen
     private Texture bg1, bg2;
 
     final private float horVelocity = 50f;
-    final private float bg1Scale = 2.25f;
+    final private float bg1Scale    = 2.25f;
 
     private Vector2 bg1pos, bg2pos;
 
@@ -44,7 +44,7 @@ public class SettingsScreen implements Screen
         bg2 = new Texture("bg1.png");
 
         bg1pos = new Vector2(0f, 0f);
-        bg2pos = new Vector2(bg1.getWidth() / bg1Scale,0f);
+        bg2pos = new Vector2(bg1.getWidth() / bg1Scale, 0f);
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -53,12 +53,13 @@ public class SettingsScreen implements Screen
         table.setFillParent(true);
         stage.addActor(table);
 
-//        table.debug();
+        //        table.debug();
 
         createOptions();
     }
 
-    private void createOptions() {
+    private void createOptions()
+    {
         TextButton button2 = new TextButton("Button 1", skin);
         TextButton button3 = new TextButton("Button 2", skin);
         TextButton button4 = new TextButton("Button 3", skin);
@@ -74,18 +75,21 @@ public class SettingsScreen implements Screen
 
         TextButton backBtn = new TextButton("Back", skin);
 
-        table.row().pad(10,0,0,0).fillX();
+        table.row().pad(10, 0, 0, 0).fillX();
         table.add(backBtn);
 
-        backBtn.addListener(new ClickListener(Input.Buttons.LEFT) {
+        backBtn.addListener(new ClickListener(Input.Buttons.LEFT)
+        {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public void clicked(InputEvent event, float x, float y)
+            {
                 game.setScreen(new MenuScreen(game));
             }
         });
     }
 
-    private void update(float dt) {
+    private void update(float dt)
+    {
         bg1pos.x -= horVelocity * dt;
         bg2pos.x -= horVelocity * dt;
 

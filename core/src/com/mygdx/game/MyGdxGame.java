@@ -2,27 +2,47 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.screens.MenuScreen;
 
 public class MyGdxGame extends Game
 {
-	public SpriteBatch batch;
+    final private int screenWidth  = 640;
+    final private int screenHeight = 480;
 
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		setScreen(new MenuScreen(this));
-	}
+    public SpriteBatch batch;
 
-	@Override
-	public void render () {
-		super.render();
-	}
-	
-	@Override
-	public void dispose () {
-		super.dispose();
+    public ShapeRenderer shape;
 
-		batch.dispose();
-	}
+    @Override
+    public void create()
+    {
+        batch = new SpriteBatch();
+        shape = new ShapeRenderer();
+
+        setScreen(new MenuScreen(this));
+    }
+
+    @Override
+    public void render()
+    {
+        super.render();
+    }
+
+    @Override
+    public void dispose()
+    {
+        super.dispose();
+
+        batch.dispose();
+    }
+
+    public int getScreenWidth()
+    {
+        return screenWidth;
+    }
+    public int getScreenHeight()
+    {
+        return screenHeight;
+    }
 }
